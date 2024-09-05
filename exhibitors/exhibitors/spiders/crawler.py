@@ -7,11 +7,9 @@ class CrawlerSpider(scrapy.Spider):
     name = "crawler"
     allowed_domains = ["lasvegasaug.fashionresource.com"]
 
-    start_urls = ["https://lasvegasaug.fashionresource.com/newfront/marketplace/exhibitors?pageNumber=1"]
-
     def start_requests(self):
-        for url in self.start_urls:
-            yield scrapy.Request(url, callback=self.parse)
+        url = "https://lasvegasaug.fashionresource.com/newfront/marketplace/exhibitors?pageNumber=1"
+        yield scrapy.Request(url, callback=self.parse, meta={"playwright": True})
 
     def parse(self, response):
         with open("exhibitors.html", "w") as f:
